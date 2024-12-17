@@ -13,12 +13,24 @@ import java.util.Scanner;
 public class Testing {
 
     /**
-     * @param args the command line arguments
      */
+    
+    public  static void menuLoginPel(){
+            System.out.println("----menu pelamar----");
+            System.out.println("1.melihat lowongan kerja");
+            System.out.println("2.membuat cv");
+            System.out.println("3.melihat daftar pelatihan");
+    }
+        public void menuLoginAdm(){}
+        public void menuLoginPen(){}
+        
     public static void main(String[] args) {
+        
+        DaftarPelatihan DP = new DaftarPelatihan();
         Scanner scan = new Scanner(System.in);
         int pilihan;
-
+        
+        
         // Loop utama program
         while (true) {
             // Menampilkan menu
@@ -64,9 +76,26 @@ public class Testing {
                     if (roles == 1){
                         PembukaLowongan penyediaLogin = new PembukaLowongan("", emailLogin, passwordLogin, "", "penyedia", "");
                         penyediaLogin.login(emailLogin, passwordLogin);
+                        
                     }else if (roles == 2){
                         Pelamar pelamarLogin = new Pelamar("", emailLogin, passwordLogin, "", "pelamar", "");
                         pelamarLogin.login(emailLogin, passwordLogin);
+                        menuLoginPel();
+                        int pilLog;
+                        pilLog = scan.nextInt();
+                        switch(pilLog){
+                            case 1 -> {
+
+                            }
+                            case 2 ->{
+
+                            }
+                            case 3 ->{
+                                DP.showPelatihan();
+                                String judul;
+                                pelamarLogin.mendaftarpelat();
+                            }
+                        }                        
                     }
                 }
                 case 2 -> {
