@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  *
  * @author LEGION
- */
+ */ 
 public class Testing {
 
     /**
@@ -22,11 +22,25 @@ public class Testing {
         // Loop utama program
         while (true) {
             // Menampilkan menu
-            System.out.println("\n=== MENU UTAMA ===");
-            System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("3. Keluar");
-            System.out.print("Pilih menu: ");
+            System.out.println("Pilih Role: ");
+            System.out.println("1. Penyedia Kerja");
+            System.out.println("2. Pencari Kerja");
+            System.out.println("3. Admin");
+            int roles = scan.nextInt();   
+            if (roles > 3){
+                System.out.println("Tidak ada roles yang dipilih");
+            }else if (roles == 3){
+                System.out.println("1. Login");
+                System.out.println("2. Keluar");
+                System.out.print("Pilih menu: ");
+            }else if (roles == 1 || roles == 2){
+                System.out.println("1. Login");
+                System.out.println("2. Register");
+                System.out.println("3. Keluar");
+                System.out.print("Pilih menu: ");
+            }else{
+                break;
+            }
 
             // Membaca pilihan pengguna
             if (scan.hasNextInt()) {
@@ -46,8 +60,14 @@ public class Testing {
                     System.out.print("Masukkan password: ");
                     String passwordLogin = scan.nextLine();
 
-                    Pelamar pelamarLogin = new Pelamar("", emailLogin, passwordLogin, "", "pelamar", "");
-                    pelamarLogin.login(emailLogin, passwordLogin);
+                    
+                    if (roles == 1){
+                        PembukaLowongan penyediaLogin = new PembukaLowongan("", emailLogin, passwordLogin, "", "penyedia", "");
+                        penyediaLogin.login(emailLogin, passwordLogin);
+                    }else if (roles == 2){
+                        Pelamar pelamarLogin = new Pelamar("", emailLogin, passwordLogin, "", "pelamar", "");
+                        pelamarLogin.login(emailLogin, passwordLogin);
+                    }
                 }
                 case 2 -> {
                     System.out.println("Masukkan nama: ");
@@ -61,8 +81,13 @@ public class Testing {
                     System.out.println("Masukkan nomor telepon: ");
                     String noTelepon = scan.nextLine();
                     
-                    Pelamar pelamarBaru = new Pelamar(nama, email, password, alamat, "pelamar", noTelepon);
-                    pelamarBaru.register(nama, email, password, alamat, noTelepon);
+                    if (roles == 1){
+                        PembukaLowongan penyediaBaru = new PembukaLowongan(nama, email, password, alamat, "penyedia", noTelepon);
+                        penyediaBaru.register(nama, email, password, alamat, noTelepon);
+                    }else if(roles == 2){
+                        Pelamar pelamarBaru = new Pelamar(nama, email, password, alamat, "pelamar", noTelepon);
+                        pelamarBaru.register(nama, email, password, alamat, noTelepon);
+                    }
                 }
                 case 3 -> {
                     for (User user : User.getDatabase()) {

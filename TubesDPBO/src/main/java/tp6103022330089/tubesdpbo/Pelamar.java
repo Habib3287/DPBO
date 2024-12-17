@@ -20,9 +20,11 @@ public class Pelamar extends User {
     @Override
     public void login(String email, String password) {
         for (User user : User.getDatabase()) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                System.out.println("Login berhasil untuk email: " + email);
-                return;
+            if( user instanceof Pelamar){
+                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                    System.out.println("Login berhasil untuk email: " + email);
+                    return;
+                }
             }
         }
         System.out.println("Login gagal. Email atau password salah.");

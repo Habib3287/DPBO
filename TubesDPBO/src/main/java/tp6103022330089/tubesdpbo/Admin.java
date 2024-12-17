@@ -9,16 +9,17 @@ package tp6103022330089.tubesdpbo;
  * @author LEGION
  */
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Date;
 
 public class Admin extends User implements News {
+    Scanner scan = new Scanner(System.in);
     private String idAdmin;
-    private String hakAkses;
     private ArrayList<Berita> daftarBerita;
+    private ArrayList<Pelatihan> daftarPelatihan;
 
     public Admin(String nama, String email, String password, String alamat, String role, String noTelepon, String idAdmin, String hakAkses ) {
         super(nama, email, password, alamat, role, noTelepon);
-        this.idAdmin = idAdmin;
-        this.hakAkses = hakAkses;
         this.daftarBerita = new ArrayList<>();
     }
 
@@ -29,12 +30,6 @@ public class Admin extends User implements News {
         this.idAdmin = idAdmin;
     }
 
-    public String getHakAkses() {return hakAkses;}
-
-    public void setHakAkses(String hakAkses) {
-        this.hakAkses = hakAkses;
-    }
-
     public void melakukan() {
         System.out.println("Admin sedang melakukan aktivitas.");
     }
@@ -42,8 +37,7 @@ public class Admin extends User implements News {
     // Implementasi Metode News
     @Override
     public void tambahBerita(String idBerita, String judul, String content) {
-        Berita beritaBaru = new Berita(idBerita, judul, content) {
-        };
+        Berita beritaBaru = new Berita(idBerita, judul, content);
         daftarBerita.add(beritaBaru);
         System.out.println("Berita berhasil ditambahkan: " + judul);
     }
@@ -69,7 +63,7 @@ public class Admin extends User implements News {
             return;
         }
 
-        System.out.println("Daftar Berita:");
+        System.out.println("Daftar Berita: ");
         for (Berita berita : daftarBerita) {
             System.out.println("- " + berita.getJudul() + " (Konten: " +
                     berita.getContent() + ")");
@@ -79,9 +73,11 @@ public class Admin extends User implements News {
     @Override
     public void login(String email, String password) {
         for (User user : User.getDatabase()) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                System.out.println("Login berhasil untuk email: " + email);
-                return;
+            if( user instanceof Admin){
+                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                    System.out.println("Login berhasil untuk email: " + email);
+                    return;
+                }
             }
         }
         System.out.println("Login gagal. Email atau password salah.");
@@ -89,6 +85,44 @@ public class Admin extends User implements News {
 
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Admin tidak perlu register");
+    }
+    
+    public void hapusUser(String nama, String email){
+        for (User user : User.getDatabase()) {
+            if (user instanceof Pelamar || user instanceof PembukaLowongan){
+                if (user.getEmail().equals(email) && user.getNama().equals(nama)){
+                    System.out.println("Apakah anda yakin ingin menghapus user " + user.getNama() + " (Y/N)");
+                    String perm = scan.nextLine();
+                    if (perm.equals('y') || perm.equals('Y')){
+                        User.getDatabase().remove(user);
+                        System.out.println("User " + user.getNama() + " telah dihapus");
+                    }else{
+                        System.out.println("Baiklah");
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    public void tambahPelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan) {
+        Date tanggalPelatihan = new Date();
+        Pelatihan pelatihanBaru = new Pelatihan(judulPelatihan, pemateri, deskripsiPelatihan, tanggalPelatihan);
+        daftarPelatihan.add(pelatihanBaru);
+        System.out.println("Pelatihan berhasil ditambahkan: " + judulPelatihan);
+    }
+
+    public void hapusPelatihan(String judul) {
+        for (Pelatihan pelatihan : daftarPelatihan) {
+            if (pelatihan.getjudulPelatihan().equals(judul)) {
+                daftarPelatihan.remove(pelatihan);
+                System.out.println("Pelatihan " + judul +
+                        " berhasil dihapus.");
+                return;
+            }
+        }
+        System.out.println("Pelatihan " + judul +
+                " tidak ditemukan.");
     }
 }

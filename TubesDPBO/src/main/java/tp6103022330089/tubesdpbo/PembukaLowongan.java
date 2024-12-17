@@ -15,18 +15,9 @@ public class PembukaLowongan extends User {
     private String idPembuka;
     private ArrayList<Lowongan> dLowongan;
 
-    public PembukaLowongan(String nama, String email, String password, String alamat, String role, String noTelepon, String idPembuka) {
+    public PembukaLowongan(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
-        this.idPembuka = idPembuka;
         this.dLowongan = new ArrayList<>();
-    }
-    
-    
-
-    public String getIdPembuka() {return idPembuka;}
-
-    public void setIdPembuka(String idPembuka) {
-        this.idPembuka = idPembuka;
     }
     
     public void melakukan() {
@@ -72,9 +63,11 @@ public class PembukaLowongan extends User {
     @Override
     public void login(String email, String password) {
             for (User user : User.getDatabase()) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                System.out.println("Login berhasil untuk email: " + email);
-                return;
+            if (user instanceof PembukaLowongan){
+                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                    System.out.println("Login berhasil sebagai penyedia untuk email : " + email);
+                    return;
+                }
             }
         }
         System.out.println("Login gagal. Email atau password salah.");
@@ -82,7 +75,7 @@ public class PembukaLowongan extends User {
 
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
-        PembukaLowongan pembuka = new PembukaLowongan(nama,email,password, alamat, "pembuka",noTelepon, idPembuka);
+        PembukaLowongan pembuka = new PembukaLowongan(nama,email,password, alamat, "pembuka",noTelepon);
 
         User.getDatabase().add(pembuka);
 
