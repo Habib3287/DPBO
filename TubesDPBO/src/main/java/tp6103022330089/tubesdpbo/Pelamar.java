@@ -38,6 +38,9 @@ public class Pelamar extends User {
 
         System.out.println("Register berhasil! User " + nama + " telah ditambahkan ke database.");
     }
+        public void mendaftarpelat(){
+        
+    }
 }
 
     
