@@ -16,12 +16,10 @@ public class Lowongan {
     private String deskripsi;
     private Date tanggalBuat;
 
-    public Lowongan(String idLowongan, String judul, String deskripsi, Date 
-            tanggalBuat) {
+    public Lowongan(String idLowongan, String judul, String deskripsi) {
         this.idLowongan = idLowongan;
         this.judul = judul;
         this.deskripsi = deskripsi;
-        this.tanggalBuat = tanggalBuat;
     }
 
     public String getIdLowongan() {return idLowongan;}
@@ -29,8 +27,6 @@ public class Lowongan {
     public String getJudul() {return judul;}
 
     public String getDeskripsi() {return deskripsi;}
-
-    public Date getTanggalBuat() {return tanggalBuat;}
 
     public void setIdLowongan(String idLowongan) {
         this.idLowongan = idLowongan;

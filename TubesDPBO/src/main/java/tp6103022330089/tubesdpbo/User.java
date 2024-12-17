@@ -29,6 +29,10 @@ public abstract class User {
         this.noTelepon = noTelepon;
     }
     
+        public User(String nama) {
+        this.nama = nama;
+    }
+    
     public String getNoTelepon() {
         return noTelepon;
     }
@@ -85,7 +89,7 @@ public abstract class User {
     }
 
 
-    public abstract void login(String email, String password);
+    public abstract boolean login(String email, String password);
     public abstract void register(String nama, String email, String password, String alamat, String noTelepon);
 }
 

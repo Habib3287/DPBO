@@ -16,18 +16,22 @@ public class Pelamar extends User {
     public Pelamar(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
     }
+    
+    public Pelamar(String nama) {
+        super(nama);
+    }
 
     @Override
-    public void login(String email, String password) {
+    public boolean login(String email, String password) {
         for (User user : User.getDatabase()) {
             if( user instanceof Pelamar){
                 if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                     System.out.println("Login berhasil untuk email: " + email);
-                    return;
+                    return true;
                 }
             }
         }
-        System.out.println("Login gagal. Email atau password salah.");
+        return false;
     }
 
     @Override
@@ -38,8 +42,15 @@ public class Pelamar extends User {
 
         System.out.println("Register berhasil! User " + nama + " telah ditambahkan ke database.");
     }
-        public void mendaftarpelat(){
-        
+    public void mendaftarpelatihan(String emailPelamar){
+        for (User pelamar : User.getDatabase()) {
+            if( pelamar instanceof Pelamar){
+                if (pelamar.getEmail().equals(emailPelamar)) {
+                    System.out.println("kontol");
+                    return;
+                }
+            }                
+        }
     }
 }
 

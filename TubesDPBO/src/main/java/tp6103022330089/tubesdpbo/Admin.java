@@ -18,9 +18,14 @@ public class Admin extends User implements News {
     private ArrayList<Berita> daftarBerita;
     private ArrayList<Pelatihan> daftarPelatihan;
 
-    public Admin(String nama, String email, String password, String alamat, String role, String noTelepon, String idAdmin, String hakAkses ) {
+    public Admin(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
         this.daftarBerita = new ArrayList<>();
+        this.daftarPelatihan = new ArrayList<>();
+    }
+    
+    public Admin(String nama) {
+        super(nama);
     }
 
     
@@ -28,10 +33,6 @@ public class Admin extends User implements News {
 
     public void setIdAdmin(String idAdmin) {
         this.idAdmin = idAdmin;
-    }
-
-    public void melakukan() {
-        System.out.println("Admin sedang melakukan aktivitas.");
     }
 
     // Implementasi Metode News
@@ -71,16 +72,17 @@ public class Admin extends User implements News {
     }
 
     @Override
-    public void login(String email, String password) {
+    public boolean login(String email, String password) {
         for (User user : User.getDatabase()) {
             if( user instanceof Admin){
                 if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                     System.out.println("Login berhasil untuk email: " + email);
-                    return;
+                    return true;
                 }
             }
         }
-        System.out.println("Login gagal. Email atau password salah.");
+
+        return false;
     }
 
     @Override
@@ -107,10 +109,14 @@ public class Admin extends User implements News {
     }
     
     public void tambahPelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan) {
-        Date tanggalPelatihan = new Date();
-        Pelatihan pelatihanBaru = new Pelatihan(judulPelatihan, pemateri, deskripsiPelatihan, tanggalPelatihan);
-        daftarPelatihan.add(pelatihanBaru);
-        System.out.println("Pelatihan berhasil ditambahkan: " + judulPelatihan);
+        for (Pelatihan pelatihan : daftarPelatihan) {
+            if (!pelatihan.equals(judulPelatihan)){
+                Date tanggalPelatihan = new Date();
+                Pelatihan pelatihanBaru = new Pelatihan(judulPelatihan, pemateri, deskripsiPelatihan);
+                daftarPelatihan.add(pelatihanBaru);
+                System.out.println("Pelatihan berhasil ditambahkan: " + judulPelatihan);
+            }
+        }
     }
 
     public void hapusPelatihan(String judul) {

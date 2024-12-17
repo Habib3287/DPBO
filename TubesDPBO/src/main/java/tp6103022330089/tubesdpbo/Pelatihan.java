@@ -4,7 +4,6 @@
  */
 package tp6103022330089.tubesdpbo;
 
-import java.util.Date;
 
 /**
  *
@@ -14,13 +13,11 @@ public class Pelatihan {
     private String judulPelatihan;
     private String pemateri;
     private String deskripsiPelatihan;
-    private Date tanggalPelatihan;
 
-    public Pelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan, Date tanggalPelatihan) {
+    public Pelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan) {
         this.judulPelatihan = judulPelatihan;
         this.pemateri = pemateri;
         this.deskripsiPelatihan = deskripsiPelatihan;
-        this.tanggalPelatihan = tanggalPelatihan;
     }
 
 
@@ -37,10 +34,6 @@ public class Pelatihan {
         return deskripsiPelatihan;
     }
 
-    public Date getTanggalPelatihan() {
-        return tanggalPelatihan;
-    }
-
     public void setJudulPelatihan(String judulPelatihan) {
         this.judulPelatihan = judulPelatihan;
     }
@@ -51,12 +44,5 @@ public class Pelatihan {
 
     public void setDeskripsiPelatihan(String deskripsiPelatihan) {
         this.deskripsiPelatihan = deskripsiPelatihan;
-    }
-
-    public void setTanggalPelatihan(Date tanggalPelatihan) {
-        this.tanggalPelatihan = tanggalPelatihan;
-    }
-    
-    
-    
+    }    
 }

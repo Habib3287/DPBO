@@ -14,12 +14,12 @@ public class DaftarPelatihan {
     private String idDPelatihan;
     private ArrayList<Pelatihan> pelatihanTersedia;
 
-    public DaftarPelatihan(String idDPelatihan, ArrayList<Pelatihan> pelatihanTersedia) {
+    public DaftarPelatihan(String idDPelatihan) {
         this.idDPelatihan = idDPelatihan;
         this.pelatihanTersedia = new ArrayList<>();
     }
     
-    public void daftarPelatihan(){
+    public void showPelatihan(){
         if (pelatihanTersedia.isEmpty()){
             System.out.println("Belum ada pelatihan yang tersedia");
             return;

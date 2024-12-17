@@ -9,31 +9,29 @@ package tp6103022330089.tubesdpbo;
  * @author LEGION
  */
 import java.util.ArrayList;
-import java.util.Date;
 
 public class PembukaLowongan extends User {
     private String idPembuka;
     private ArrayList<Lowongan> dLowongan;
+    private ArrayList<Pelamar> dPelamar;
 
     public PembukaLowongan(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
         this.dLowongan = new ArrayList<>();
     }
     
-    public void melakukan() {
-        System.out.println("Pembuka lowongan sedang melakukan aktivitas.");
+    public PembukaLowongan(String nama) {
+        super(nama);
     }
 
     public void membuatLowongan(String idLowongan, String judul, 
             String deskripsi) {
-        Date tanggalBuat = new Date();
-        Lowongan newLowongan = new Lowongan(idLowongan, judul, deskripsi,
-                tanggalBuat);
+        Lowongan newLowongan = new Lowongan(idLowongan, judul, deskripsi);
         dLowongan.add(newLowongan);
         System.out.println("Lowongan berhasil dibuat dengan judul: " + judul);
     }
 
-        public void daftarPelamar(ArrayList<Pelamar> dPelamar) {
+        public void daftarPelamar() {
             System.out.println("Daftar Pelamar untuk Lowongan:");
             if (dPelamar.isEmpty()) {
                 System.out.println("Tidak ada pelamar untuk lowongan ini.");
@@ -41,14 +39,6 @@ public class PembukaLowongan extends User {
                 for (Pelamar pelamar : dPelamar) {
                     System.out.println("- " + pelamar.getNama() );
                 }
-            }
-        }
-        
-        public void menerimaPelamar(Pelamar pelamar) {
-            if (pelamar != null) {
-                System.out.println("Pelamar " + pelamar.getNama() + " diterima.");
-            } else {
-                System.out.println("Pelamar tidak ditemukan.");
             }
         }
         
@@ -61,16 +51,17 @@ public class PembukaLowongan extends User {
         }
 
     @Override
-    public void login(String email, String password) {
+    public boolean login(String email, String password) {
             for (User user : User.getDatabase()) {
             if (user instanceof PembukaLowongan){
                 if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                     System.out.println("Login berhasil sebagai penyedia untuk email : " + email);
-                    return;
+                    return true;
                 }
             }
         }
         System.out.println("Login gagal. Email atau password salah.");
+        return false;
     }
 
     @Override

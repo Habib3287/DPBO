@@ -19,7 +19,7 @@ public class Pesan {
     private String pesan;
     private Date jam;
 
-    public Pesan(String idChat, String pengirim, String penerima, String pesan) {
+    public Pesan(String idChat, String pengirim, String penerima, String pesan, Date jam) {
         this.idChat = idChat;
         this.pengirim = pengirim;
         this.penerima = penerima;

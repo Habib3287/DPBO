@@ -15,18 +15,34 @@ public class Testing {
     /**
      */
     
-    public  static void menuLoginPel(){
-            System.out.println("----menu pelamar----");
-            System.out.println("1.melihat lowongan kerja");
-            System.out.println("2.membuat cv");
-            System.out.println("3.melihat daftar pelatihan");
-    }
-        public void menuLoginAdm(){}
-        public void menuLoginPen(){}
+        public  static void menuLoginPel(){
+            System.out.println("----Menu Pelamar----");
+            System.out.println("1. Melihat lowongan kerja");
+            System.out.println("2. Membuat cv");
+            System.out.println("3. Melihat daftar pelatihan");
+        }
+        
+        public static void menuLoginAdm(){
+            System.out.println("----Menu Admin----");
+            System.out.println("1. Tambah Berita");
+            System.out.println("2. Menghapus Berita");
+            System.out.println("3. Tambah Pelatihan");
+            System.out.println("4. Hapus Pelatihan");
+            System.out.println("5. Hapus User");
+        }
+        
+        public static void menuLoginPen(){
+            System.out.println("----Menu Pembuka Lowongan----");
+            System.out.println("1. Membuat Lowongan");
+            System.out.println("2. Menolak Pelamar");
+        }
         
     public static void main(String[] args) {
         
-        DaftarPelatihan DP = new DaftarPelatihan();
+        Admin admin = new Admin("a","b","c", "d", "Admin", "f");
+        User.getDatabase().add(admin);
+        
+        DaftarPelatihan DP = new DaftarPelatihan("");
         Scanner scan = new Scanner(System.in);
         int pilihan;
         
@@ -73,30 +89,120 @@ public class Testing {
                     String passwordLogin = scan.nextLine();
 
                     
-                    if (roles == 1){
-                        PembukaLowongan penyediaLogin = new PembukaLowongan("", emailLogin, passwordLogin, "", "penyedia", "");
-                        penyediaLogin.login(emailLogin, passwordLogin);
-                        
-                    }else if (roles == 2){
-                        Pelamar pelamarLogin = new Pelamar("", emailLogin, passwordLogin, "", "pelamar", "");
-                        pelamarLogin.login(emailLogin, passwordLogin);
+                switch (roles) {
+                    case 1:
+                    PembukaLowongan penyedia = new PembukaLowongan("", emailLogin, passwordLogin, "", "penyedia", "");
+                    penyedia.login(emailLogin, passwordLogin);
+                    menuLoginPen();
+                    int pilLogPen;
+                    pilLogPen = scan.nextInt();
+                    scan.nextLine(); // Membersihkan buffer setelah nextInt
+
+                    switch (pilLogPen) {
+                        case 1 -> {
+                            System.out.println("Masukkan ID Lowongan");
+                            String idLowongan = scan.nextLine();
+                            System.out.println("Masukkan Judul Lowongan");
+                            String judul = scan.nextLine();
+                            System.out.println("Masukkan Deskripsi Lowongan");
+                            String deskripsi = scan.nextLine();
+                            penyedia.membuatLowongan(idLowongan, judul, deskripsi);
+                        }
+                        case 2 -> {
+                            System.out.println("Masukkan Nama Pelamar");
+                            String namaPelamar = scan.nextLine();
+
+                            // Cari pelamar yang cocok di database
+                            boolean pelamarDitemukan = false;
+
+                            for (User user : User.getDatabase()) {
+                                if (user instanceof Pelamar) {
+                                    Pelamar pelamar = (Pelamar) user; // Casting User menjadi Pelamar
+                                    if (pelamar.getNama().equalsIgnoreCase(namaPelamar)) {
+                                        penyedia.menolakPelamar(pelamar); // Menolak pelamar yang sesuai
+                                        pelamarDitemukan = true;
+                                        System.out.println("Pelamar " + namaPelamar + " telah ditolak.");
+                                        break;
+                                    }
+                                }
+                            }
+
+                                if (!pelamarDitemukan) {
+                                    System.out.println("Pelamar dengan nama " + namaPelamar + " tidak ditemukan.");
+                                }
+                            }
+                        }
+                        break;
+                    case 2:
+                        Pelamar pelamar = new Pelamar("", emailLogin, passwordLogin, "", "pelamar", "");
+                        pelamar.login(emailLogin, passwordLogin);
                         menuLoginPel();
-                        int pilLog;
-                        pilLog = scan.nextInt();
-                        switch(pilLog){
+                        int pilLogPel;
+                        pilLogPel = scan.nextInt();
+                        switch(pilLogPel){
                             case 1 -> {
 
                             }
                             case 2 ->{
-
+                                
                             }
                             case 3 ->{
                                 DP.showPelatihan();
-                                String judul;
-                                pelamarLogin.mendaftarpelat();
+                                String email = pelamar.getEmail();
+                                pelamar.mendaftarpelatihan(email);
                             }
-                        }                        
-                    }
+                        }
+                    case 3:
+                         
+                        if(admin.login(emailLogin, passwordLogin)){
+                            menuLoginAdm();
+                            int pilLogAdm;
+                            pilLogAdm = scan.nextInt();
+                            switch(pilLogAdm){
+                                case 1 -> {
+                                    System.out.println("Masukkan ID Berita");
+                                    String idBerita = scan.nextLine();
+                                    System.out.println("Masukkan Judul");
+                                    String judul = scan.nextLine();
+                                    System.out.println("Masukkan Konten");
+                                    String content = scan.nextLine();
+                                    admin.tambahBerita(idBerita,judul,content);
+                                }
+                                case 2 ->{
+                                    System.out.println("Masukkan ID Berita");
+                                    String idBerita = scan.nextLine();
+                                    admin.hapusBerita(idBerita);
+                                }
+                                case 3 ->{
+                                    System.out.println("Masukkan Judul Pelatihan");
+                                    String judulPelatihan = scan.nextLine();
+                                    System.out.println("Masukkan Pemateri");
+                                    String pemateri = scan.nextLine();
+                                    System.out.println("Masukkan Deskripsi Pelatihan");
+                                    String deskripsiPelatihan = scan.nextLine();
+                                    admin.tambahPelatihan(judulPelatihan, pemateri, deskripsiPelatihan);
+                                }
+                                case 4 ->{
+                                    System.out.println("Masukkan Judul Pelatihan");
+                                    String judulPelatihan = scan.nextLine();
+                                    admin.hapusPelatihan(judulPelatihan);
+                                }
+                                case 5 ->{
+                                    for (User user : User.getDatabase()) {
+                                        if (user instanceof Pelamar || user instanceof PembukaLowongan){
+                                            admin.hapusUser(user.getNama(), user.getEmail());
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }else{
+                            System.out.println("Login gagal. Email atau password salah.");
+                        }
+   
+                    default:
+                        break;
+                }
                 }
                 case 2 -> {
                     System.out.println("Masukkan nama: ");
