@@ -10,7 +10,6 @@ package tp6103022330089.tubesdpbo;
  */
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Date;
 
 public class Admin extends User implements News {
     Scanner scan = new Scanner(System.in);
@@ -111,7 +110,6 @@ public class Admin extends User implements News {
     public void tambahPelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan) {
         for (Pelatihan pelatihan : daftarPelatihan) {
             if (!pelatihan.equals(judulPelatihan)){
-                Date tanggalPelatihan = new Date();
                 Pelatihan pelatihanBaru = new Pelatihan(judulPelatihan, pemateri, deskripsiPelatihan);
                 daftarPelatihan.add(pelatihanBaru);
                 System.out.println("Pelatihan berhasil ditambahkan: " + judulPelatihan);

@@ -10,6 +10,7 @@ package tp6103022330089.tubesdpbo;
  * @author LEGION
  */
 public class Pelatihan {
+    private String idPelatihan;
     private String judulPelatihan;
     private String pemateri;
     private String deskripsiPelatihan;
@@ -20,7 +21,9 @@ public class Pelatihan {
         this.deskripsiPelatihan = deskripsiPelatihan;
     }
 
-
+    public String getIdPelatihan() {
+        return idPelatihan;
+    }
 
     public String getjudulPelatihan() {
         return judulPelatihan;
@@ -45,4 +48,10 @@ public class Pelatihan {
     public void setDeskripsiPelatihan(String deskripsiPelatihan) {
         this.deskripsiPelatihan = deskripsiPelatihan;
     }    
+
+    public void setIdPelatihan(String idPelatihan) {
+        this.idPelatihan = idPelatihan;
+    }
+    
+    
 }

@@ -4,14 +4,15 @@
  */
 package tp6103022330089.tubesdpbo;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author LEGION
  */
-import java.util.Scanner;
 
 public class Pelamar extends User {
-    Scanner scan = new Scanner(System.in);
 
     public Pelamar(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
@@ -43,13 +44,26 @@ public class Pelamar extends User {
         System.out.println("Register berhasil! User " + nama + " telah ditambahkan ke database.");
     }
     public void mendaftarpelatihan(String emailPelamar){
-        for (User pelamar : User.getDatabase()) {
-            if( pelamar instanceof Pelamar){
-                if (pelamar.getEmail().equals(emailPelamar)) {
-                    System.out.println("kontol");
+        for (User user : User.getDatabase()) {
+            if( user instanceof Pelamar){
+                if (user.getEmail().equals(emailPelamar)) {
+                    System.out.println("Pelamar ditemukan: " + emailPelamar);
+                    DaftarPelatihan.showPelatihan();
+                    System.out.println("Masukkan ID Pelatihan yang ingin Anda daftar: ");
+                    Scanner scan = new Scanner(System.in);
+                    String idPelatihanPilihan =  scan.nextLine();
+                    
+                    for ( Pelatihan pelatihan : DaftarPelatihan.getDaftarPelatihan() ) {
+                        if (pelatihan.getIdPelatihan().equals(idPelatihanPilihan)){
+                            System.out.println("Anda berhasil mendaftar ke pelatihan: " + pelatihan.getjudulPelatihan());
+                            return;
+                        }
+                    }
+                    System.out.println("Pelatihan dengan ID tersebut tidak ditemukan.");
                     return;
                 }
-            }                
+            }           
+            System.out.println("Pelamar tidak ditemukan di database."); 
         }
     }
 }

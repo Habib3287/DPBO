@@ -8,13 +8,11 @@ package tp6103022330089.tubesdpbo;
  *
  * @author LEGION
  */
-import java.util.Date;
         
 public class Lowongan {
     private String idLowongan;
     private String judul;
     private String deskripsi;
-    private Date tanggalBuat;
 
     public Lowongan(String idLowongan, String judul, String deskripsi) {
         this.idLowongan = idLowongan;
@@ -39,11 +37,4 @@ public class Lowongan {
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
     }
-
-    public void setTanggalBuat(Date tanggalBuat) {
-        this.tanggalBuat = tanggalBuat;
-    }
-    
-    
-    
 }

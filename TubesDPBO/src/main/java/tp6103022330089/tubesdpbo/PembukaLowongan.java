@@ -11,13 +11,12 @@ package tp6103022330089.tubesdpbo;
 import java.util.ArrayList;
 
 public class PembukaLowongan extends User {
-    private String idPembuka;
-    private ArrayList<Lowongan> dLowongan;
-    private ArrayList<Pelamar> dPelamar;
+    private ArrayList<Lowongan> daftarLowongan;
+    private ArrayList<Pelamar> daftarPelamar;
 
     public PembukaLowongan(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
-        this.dLowongan = new ArrayList<>();
+        this.daftarLowongan = new ArrayList<>();
     }
     
     public PembukaLowongan(String nama) {
@@ -27,16 +26,16 @@ public class PembukaLowongan extends User {
     public void membuatLowongan(String idLowongan, String judul, 
             String deskripsi) {
         Lowongan newLowongan = new Lowongan(idLowongan, judul, deskripsi);
-        dLowongan.add(newLowongan);
+        daftarLowongan.add(newLowongan);
         System.out.println("Lowongan berhasil dibuat dengan judul: " + judul);
     }
 
         public void daftarPelamar() {
             System.out.println("Daftar Pelamar untuk Lowongan:");
-            if (dPelamar.isEmpty()) {
+            if (daftarPelamar.isEmpty()) {
                 System.out.println("Tidak ada pelamar untuk lowongan ini.");
             } else {
-                for (Pelamar pelamar : dPelamar) {
+                for (Pelamar pelamar : daftarPelamar) {
                     System.out.println("- " + pelamar.getNama() );
                 }
             }

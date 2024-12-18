@@ -12,19 +12,22 @@ import java.util.ArrayList;
  */
 public class DaftarPelatihan {
     private String idDPelatihan;
-    private ArrayList<Pelatihan> pelatihanTersedia;
+    private static ArrayList<Pelatihan> pelatihanTersedia;
 
     public DaftarPelatihan(String idDPelatihan) {
         this.idDPelatihan = idDPelatihan;
-        this.pelatihanTersedia = new ArrayList<>();
+        DaftarPelatihan.pelatihanTersedia = new ArrayList<>();
+    }
+
+    public String getIdDPelatihan() {
+        return idDPelatihan;
     }
     
-    public void showPelatihan(){
-        if (pelatihanTersedia.isEmpty()){
-            System.out.println("Belum ada pelatihan yang tersedia");
-            return;
-        }
-        
+    public static ArrayList<Pelatihan> getDaftarPelatihan() {
+        return pelatihanTersedia;
+    }
+    
+    public static void showPelatihan(){
         System.out.println("Daftar Pelatihan: ");
         for (Pelatihan pelatihan : pelatihanTersedia) {
             System.out.println("- " + pelatihan.getjudulPelatihan());

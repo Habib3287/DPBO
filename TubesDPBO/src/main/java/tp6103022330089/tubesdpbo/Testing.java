@@ -41,8 +41,6 @@ public class Testing {
         
         Admin admin = new Admin("a","b","c", "d", "Admin", "f");
         User.getDatabase().add(admin);
-        
-        DaftarPelatihan DP = new DaftarPelatihan("");
         Scanner scan = new Scanner(System.in);
         int pilihan;
         
@@ -116,8 +114,7 @@ public class Testing {
                             boolean pelamarDitemukan = false;
 
                             for (User user : User.getDatabase()) {
-                                if (user instanceof Pelamar) {
-                                    Pelamar pelamar = (Pelamar) user; // Casting User menjadi Pelamar
+                                if (user instanceof Pelamar pelamar) {
                                     if (pelamar.getNama().equalsIgnoreCase(namaPelamar)) {
                                         penyedia.menolakPelamar(pelamar); // Menolak pelamar yang sesuai
                                         pelamarDitemukan = true;
@@ -127,7 +124,7 @@ public class Testing {
                                 }
                             }
 
-                                if (!pelamarDitemukan) {
+                                if (pelamarDitemukan) {
                                     System.out.println("Pelamar dengan nama " + namaPelamar + " tidak ditemukan.");
                                 }
                             }
@@ -141,13 +138,12 @@ public class Testing {
                         pilLogPel = scan.nextInt();
                         switch(pilLogPel){
                             case 1 -> {
-
+                                
                             }
                             case 2 ->{
                                 
                             }
                             case 3 ->{
-                                DP.showPelatihan();
                                 String email = pelamar.getEmail();
                                 pelamar.mendaftarpelatihan(email);
                             }
