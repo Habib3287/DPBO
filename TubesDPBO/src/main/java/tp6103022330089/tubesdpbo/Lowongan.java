@@ -4,37 +4,55 @@
  */
 package tp6103022330089.tubesdpbo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author LEGION
  */
         
 public class Lowongan {
-    private String idLowongan;
-    private String judul;
-    private String deskripsi;
 
-    public Lowongan(String idLowongan, String judul, String deskripsi) {
-        this.idLowongan = idLowongan;
-        this.judul = judul;
-        this.deskripsi = deskripsi;
+    private String id;
+    private String posisi;
+    private String perusahaan;
+    private ArrayList<Pelamar> pelamarList;
+    private static ArrayList<Lowongan> daftarLowongan = new ArrayList<>();
+
+    // Constructor
+    public Lowongan(String id, String posisi, String perusahaan) {
+        this.id = id;
+        this.posisi = posisi;
+        this.perusahaan = perusahaan;
+        this.pelamarList = new ArrayList<>();
     }
 
-    public String getIdLowongan() {return idLowongan;}
+    // Getters dan Setters
+    public String getId() { return id; }
+    public String getPosisi() { return posisi; }
+    public String getPerusahaan() { return perusahaan; }
+    public ArrayList<Pelamar> getPelamarList() { return pelamarList; }
 
-    public String getJudul() {return judul;}
-
-    public String getDeskripsi() {return deskripsi;}
-
-    public void setIdLowongan(String idLowongan) {
-        this.idLowongan = idLowongan;
+    // Melamar lowongan
+    public void melamar(Pelamar pelamar) {
+        pelamarList.add(pelamar);
     }
 
-    public void setJudul(String judul) {
-        this.judul = judul;
+    public void showLowongan() {
+        if (daftarLowongan.isEmpty()) {
+            System.out.println("Tidak ada lowongan tersedia.");
+        } else {
+            System.out.println("Daftar Lowongan Kerja:");
+            for (Lowongan lowongan : daftarLowongan) {
+                System.out.println("ID: " + lowongan.getId() + ", Posisi: " + lowongan.getPosisi() +
+                        ", Perusahaan: " + lowongan.getPerusahaan());
+            }
+        }
     }
 
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
+
+    // Daftar lowongan yang tersedia
+    public static ArrayList<Lowongan> getDaftarLowongan() {
+        return daftarLowongan;
     }
 }

@@ -12,114 +12,84 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Admin extends User implements News {
-    Scanner scan = new Scanner(System.in);
-    private String idAdmin;
-    private ArrayList<Berita> daftarBerita;
-    private ArrayList<Pelatihan> daftarPelatihan;
+    private ArrayList<Berita> daftarBerita = new ArrayList<>();
+    private ArrayList<Pelatihan> daftarPelatihan = new ArrayList<>();
 
     public Admin(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
-        this.daftarBerita = new ArrayList<>();
-        this.daftarPelatihan = new ArrayList<>();
-    }
-    
-    public Admin(String nama) {
-        super(nama);
-    }
-
-    
-    public String getIdAdmin() {return idAdmin;}
-
-    public void setIdAdmin(String idAdmin) {
-        this.idAdmin = idAdmin;
-    }
-
-    // Implementasi Metode News
-    @Override
-    public void tambahBerita(String idBerita, String judul, String content) {
-        Berita beritaBaru = new Berita(idBerita, judul, content);
-        daftarBerita.add(beritaBaru);
-        System.out.println("Berita berhasil ditambahkan: " + judul);
-    }
-
-    @Override
-    public void hapusBerita(String idBerita) {
-        for (Berita berita : daftarBerita) {
-            if (berita.getIdBerita().equals(idBerita)) {
-                daftarBerita.remove(berita);
-                System.out.println("Berita dengan ID " + idBerita +
-                        " berhasil dihapus.");
-                return;
-            }
-        }
-        System.out.println("Berita dengan ID " + idBerita +
-                " tidak ditemukan.");
-    }
-
-    @Override
-    public void tampilkanBerita() {
-        if (daftarBerita.isEmpty()) {
-            System.out.println("Belum ada berita yang tersedia.");
-            return;
-        }
-
-        System.out.println("Daftar Berita: ");
-        for (Berita berita : daftarBerita) {
-            System.out.println("- " + berita.getJudul() + " (Konten: " +
-                    berita.getContent() + ")");
-        }
-    }
-
-    @Override
-    public boolean login(String email, String password) {
-        for (User user : User.getDatabase()) {
-            if( user instanceof Admin){
-                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                    System.out.println("Login berhasil untuk email: " + email);
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
-        System.out.println("Admin tidak perlu register");
+        System.out.println("Admin tidak perlu melakukan registrasi.");
     }
-    
-    public void hapusUser(String nama, String email){
-        for (User user : User.getDatabase()) {
-            if (user instanceof Pelamar || user instanceof PembukaLowongan){
-                if (user.getEmail().equals(email) && user.getNama().equals(nama)){
-                    System.out.println("Apakah anda yakin ingin menghapus user " + user.getNama() + " (Y/N)");
-                    String perm = scan.nextLine();
-                    if (perm.equals('y') || perm.equals('Y')){
-                        User.getDatabase().remove(user);
-                        System.out.println("User " + user.getNama() + " telah dihapus");
-                    }else{
-                        System.out.println("Baiklah");
-                        return;
-                    }
-                }
+
+    @Override
+    public void addNews() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Masukkan ID berita: ");
+        String id = ScannerUtil.scanString(input);  
+        System.out.println("Masukkan judul berita: ");
+        String judul = ScannerUtil.scanString(input);   
+        System.out.println("Masukkan konten berita: ");
+        String konten = ScannerUtil.scanString(input);
+        Berita beritaBaru = new Berita(id, judul, konten);
+        daftarBerita.add(beritaBaru);
+        System.out.println("Berita dengan judul " + beritaBaru.getJudul() + " telah ditambahkan.");
+    }
+
+    @Override
+    public void deleteNews(String id) {
+        for (Berita berita : daftarBerita) {
+            if (berita.getId().equals(id)) {
+                daftarBerita.remove(berita);
+                System.out.println("Berita dengan ID " + id +
+                        " berhasil dihapus.");
+                return;
             }
         }
+        System.out.println("Berita dengan ID " + id +
+                " tidak ditemukan.");
     }
     
-    public void tambahPelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan) {
-        for (Pelatihan pelatihan : daftarPelatihan) {
-            if (!pelatihan.equals(judulPelatihan)){
-                Pelatihan pelatihanBaru = new Pelatihan(judulPelatihan, pemateri, deskripsiPelatihan);
-                daftarPelatihan.add(pelatihanBaru);
-                System.out.println("Pelatihan berhasil ditambahkan: " + judulPelatihan);
+    @Override
+    public  void displayNews() {
+        if (daftarBerita.isEmpty()) {
+            System.out.println("Tidak ada berita terbaru.");
+        } else {
+            System.out.println("---- Berita Terbaru ----");
+            for (Berita berita : daftarBerita) {
+                System.out.println("ID: " + berita.getId() +
+                                   " | Judul: " + berita.getJudul() +
+                                   "\nKonten: " + berita.getKonten() + "\n");
             }
         }
     }
 
+    // Admin dapat menambah pelatihan
+    public void tambahPelatihan() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Masukkan Judul Pelatihan: ");
+        String judulPelatihan = ScannerUtil.scanString(scan);
+        System.out.println("Masukkan Pemateri: ");
+        String pemateri = ScannerUtil.scanString(scan);
+        System.out.println("Masukkan Deskripsi Pelatihan: ");
+        String deskripsiPelatihan = ScannerUtil.scanString(scan);
+        for (Pelatihan pelatihan : daftarPelatihan) {
+            if (!pelatihan.getJudul().equals(judulPelatihan)){
+                Pelatihan pelatihanBaru = new Pelatihan(judulPelatihan, pemateri, deskripsiPelatihan);
+                daftarPelatihan.add(pelatihanBaru);
+                System.out.println("Pelatihan berhasil ditambahkan: " + judulPelatihan);
+            }else{
+                System.out.println("Pelatihan dengan judul " + judulPelatihan + " sudah ada.");
+            }
+        }
+    }
+
+    // Admin dapat menghapus pelatihan
     public void hapusPelatihan(String judul) {
         for (Pelatihan pelatihan : daftarPelatihan) {
-            if (pelatihan.getjudulPelatihan().equals(judul)) {
+            if (pelatihan.getJudul().equals(judul)) {
                 daftarPelatihan.remove(pelatihan);
                 System.out.println("Pelatihan " + judul +
                         " berhasil dihapus.");
@@ -129,4 +99,35 @@ public class Admin extends User implements News {
         System.out.println("Pelatihan " + judul +
                 " tidak ditemukan.");
     }
+
+    // Admin dapat menghapus pengguna
+    public void hapusUser(String email, String nama) {
+        for (User user : User.getDatabase()) {
+            if (user instanceof Pelamar || user instanceof PembukaLowongan){
+                if (user.getEmail().equals(email) && user.getNama().equals(nama)){
+                    System.out.println("Apakah anda yakin ingin menghapus user " + user.getNama() + " (Y/N)");
+                    Scanner confirm = new Scanner(System.in);   
+                    ScannerUtil.scanChar(confirm);
+                    if( confirm.next().charAt(0) == 'Y' || confirm.next().charAt(0) == 'y'){
+                        if (user instanceof Pelamar){
+                            Pelamar pelamar = (Pelamar) user;
+                            System.out.println("Pelamar " + pelamar.getNama() + " telah dihapus.");
+                            User.getDatabase().remove(user);
+                            return;
+                        }else if (user instanceof PembukaLowongan){
+                            PembukaLowongan pembukaLowongan = (PembukaLowongan) user;
+                            System.out.println("Penyedia " + pembukaLowongan.getNama() + " telah dihapus.");
+                            User.getDatabase().remove(user);
+                            return;
+                        }
+                    }else{
+                        System.out.println("User " + nama + " tidak akan dihapus.");
+                        return;
+                    }
+                }
+            }else{
+                System.out.println("User tidak ditemukan");
+            }
+        }
+    }    
 }

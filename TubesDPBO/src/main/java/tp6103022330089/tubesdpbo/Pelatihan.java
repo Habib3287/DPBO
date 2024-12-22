@@ -4,54 +4,65 @@
  */
 package tp6103022330089.tubesdpbo;
 
+import java.util.ArrayList;
+
 
 /**
  *
  * @author LEGION
  */
 public class Pelatihan {
-    private String idPelatihan;
-    private String judulPelatihan;
+
+    private String judul;
     private String pemateri;
-    private String deskripsiPelatihan;
+    private String deskripsi;
+    private static ArrayList<Pelatihan> daftarPelatihan = new ArrayList<>();
 
-    public Pelatihan(String judulPelatihan, String pemateri, String deskripsiPelatihan) {
-        this.judulPelatihan = judulPelatihan;
+    public Pelatihan(String judul, String pemateri, String deskripsi) {
+        this.judul = judul;
         this.pemateri = pemateri;
-        this.deskripsiPelatihan = deskripsiPelatihan;
+        this.deskripsi = deskripsi;
     }
 
-    public String getIdPelatihan() {
-        return idPelatihan;
-    }
-
-    public String getjudulPelatihan() {
-        return judulPelatihan;
+    public String getJudul() {
+        return judul;
     }
 
     public String getPemateri() {
         return pemateri;
     }
 
-    public String getDeskripsiPelatihan() {
-        return deskripsiPelatihan;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
-    public void setJudulPelatihan(String judulPelatihan) {
-        this.judulPelatihan = judulPelatihan;
+
+    public  ArrayList<Pelamar> daftarPelamar() {
+        return new ArrayList<>();
     }
 
-    public void setPemateri(String pemateri) {
-        this.pemateri = pemateri;
+    public static ArrayList<Pelatihan> getDaftarPelatihan() {
+        return daftarPelatihan;
     }
 
-    public void setDeskripsiPelatihan(String deskripsiPelatihan) {
-        this.deskripsiPelatihan = deskripsiPelatihan;
-    }    
 
-    public void setIdPelatihan(String idPelatihan) {
-        this.idPelatihan = idPelatihan;
+
+    public void daftarPelamar(Pelamar pelamar) {
+        ArrayList<Pelamar> daftarPelamar = new ArrayList<>();
+        daftarPelamar.add(pelamar);
     }
-    
-    
+
+    public void displayPelatihan() {
+        if (daftarPelatihan.isEmpty()) {
+            System.out.println("Tidak ada pelatihan yang tersedia.");
+        } else {
+            System.out.println("---- Daftar Pelatihan ----");
+            for (Pelatihan pelatihan : daftarPelatihan) {
+                System.out.println("Judul: " + pelatihan.getJudul() +
+                                   " | Pemateri: " + pelatihan.getPemateri() +
+                                   " | Deskripsi: " + pelatihan.getDeskripsi());
+            }
+        }
+    }
 }
+

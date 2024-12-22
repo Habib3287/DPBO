@@ -9,7 +9,7 @@ package tp6103022330089.tubesdpbo;
  * @author LEGION
  */
 public interface News {
-    void tambahBerita(String idBerita, String judul, String content);
-    void hapusBerita(String idBerita);
-    void tampilkanBerita();
+    void displayNews(); // Menampilkan berita
+    void addNews(); // Menambah berita
+    void deleteNews(String id); // Menghapus berita
 }

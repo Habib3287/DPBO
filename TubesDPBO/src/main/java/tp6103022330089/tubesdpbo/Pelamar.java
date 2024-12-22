@@ -4,9 +4,6 @@
  */
 package tp6103022330089.tubesdpbo;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
  *
  * @author LEGION
@@ -17,55 +14,39 @@ public class Pelamar extends User {
     public Pelamar(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
     }
-    
-    public Pelamar(String nama) {
-        super(nama);
-    }
-
-    @Override
-    public boolean login(String email, String password) {
-        for (User user : User.getDatabase()) {
-            if( user instanceof Pelamar){
-                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                    System.out.println("Login berhasil untuk email: " + email);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
-        Pelamar pelamarBaru = new Pelamar(nama, email, password, alamat, "pelamar", noTelepon);
-
-        User.getDatabase().add(pelamarBaru);
-
-        System.out.println("Register berhasil! User " + nama + " telah ditambahkan ke database.");
+        Pelamar pelamarBaru = new Pelamar(nama, email, password, alamat, "Pelamar", noTelepon);
+        addUser(pelamarBaru);
     }
-    public void mendaftarpelatihan(String emailPelamar){
-        for (User user : User.getDatabase()) {
-            if( user instanceof Pelamar){
-                if (user.getEmail().equals(emailPelamar)) {
-                    System.out.println("Pelamar ditemukan: " + emailPelamar);
-                    DaftarPelatihan.showPelatihan();
-                    System.out.println("Masukkan ID Pelatihan yang ingin Anda daftar: ");
-                    Scanner scan = new Scanner(System.in);
-                    String idPelatihanPilihan =  scan.nextLine();
-                    
-                    for ( Pelatihan pelatihan : DaftarPelatihan.getDaftarPelatihan() ) {
-                        if (pelatihan.getIdPelatihan().equals(idPelatihanPilihan)){
-                            System.out.println("Anda berhasil mendaftar ke pelatihan: " + pelatihan.getjudulPelatihan());
-                            return;
-                        }
-                    }
-                    System.out.println("Pelatihan dengan ID tersebut tidak ditemukan.");
-                    return;
-                }
-            }           
-            System.out.println("Pelamar tidak ditemukan di database."); 
+
+    // Pelamar dapat melamar pekerjaan
+    public void melamarLowongan(String email, String idLowongan) {
+        boolean ditemukan = false;
+        for (Lowongan lowongan : Lowongan.getDaftarLowongan()) {
+            if (lowongan.getId().equals(idLowongan)) {
+                ditemukan = true;
+                lowongan.melamar(this);
+                System.out.println("Pelamar " + this.getNama() + " telah melamar lowongan " + lowongan.getPosisi());
+                break;
+            }
         }
-    }
-}
+        if (!ditemukan) {
+            System.out.println("Lowongan dengan ID " + idLowongan + " tidak ditemukan.");
+        }    }
 
-    
+    // Pelamar dapat mendaftar pelatihan
+    public void mendaftarPelatihan(String judulPelatihan) {
+        for (Pelatihan pelatihan : Pelatihan.getDaftarPelatihan()) {
+            if (pelatihan.getJudul().equals(judulPelatihan)) {
+                pelatihan.daftarPelamar(this);
+                System.out.println("Pelamar " + this.getNama() + " berhasil mendaftar pelatihan " + pelatihan.getJudul());
+                return;
+            }
+        }
+        
+        System.out.println("Pelatihan dengan nama " + judulPelatihan + " tidak ditemukan.");
+    }
+
+}

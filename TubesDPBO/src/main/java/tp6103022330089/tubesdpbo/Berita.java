@@ -9,33 +9,27 @@ package tp6103022330089.tubesdpbo;
  * @author LEGION
  */
 public class Berita {
-    private String idBerita;
+
+    private String id;
     private String judul;
-    private String content;
+    private String konten;
 
-    // Constructor
-    public Berita(String idBerita, String judul, String content) {
-        this.idBerita = idBerita;
+    public Berita(String id, String judul, String konten) {
+        this.id = id;
         this.judul = judul;
-        this.content = content;
+        this.konten = konten;
     }
 
-    // Getter and Setter
-    public String getIdBerita() {return idBerita;}
-
-    public void setIdBerita(String idBerita) {
-        this.idBerita = idBerita;
+    public String getId() {
+        return id;
     }
 
-    public String getJudul() {return judul;}
-
-    public void setJudul(String judul) {
-        this.judul = judul;
+    public String getJudul() {
+        return judul;
     }
 
-    public String getContent() {return content;}
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public String getKonten() {
+        return konten;
+    }   
 }
+
