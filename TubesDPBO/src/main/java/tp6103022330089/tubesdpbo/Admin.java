@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class Admin extends User implements News {
     private ArrayList<Berita> daftarBerita = new ArrayList<>();
     private ArrayList<Pelatihan> daftarPelatihan = new ArrayList<>();
+    private ArrayList<User> daftarUser = new ArrayList<>();
 
     public Admin(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
@@ -102,32 +103,34 @@ public class Admin extends User implements News {
 
     // Admin dapat menghapus pengguna
     public void hapusUser(String email, String nama) {
-        for (User user : User.getDatabase()) {
-            if (user instanceof Pelamar || user instanceof PembukaLowongan){
-                if (user.getEmail().equals(email) && user.getNama().equals(nama)){
-                    System.out.println("Apakah anda yakin ingin menghapus user " + user.getNama() + " (Y/N)");
-                    Scanner confirm = new Scanner(System.in);   
-                    ScannerUtil.scanChar(confirm);
-                    if( confirm.next().charAt(0) == 'Y' || confirm.next().charAt(0) == 'y'){
-                        if (user instanceof Pelamar){
-                            Pelamar pelamar = (Pelamar) user;
-                            System.out.println("Pelamar " + pelamar.getNama() + " telah dihapus.");
-                            User.getDatabase().remove(user);
-                            return;
-                        }else if (user instanceof PembukaLowongan){
-                            PembukaLowongan pembukaLowongan = (PembukaLowongan) user;
-                            System.out.println("Penyedia " + pembukaLowongan.getNama() + " telah dihapus.");
-                            User.getDatabase().remove(user);
-                            return;
-                        }
-                    }else{
-                        System.out.println("User " + nama + " tidak akan dihapus.");
-                        return;
-                    }
-                }
-            }else{
-                System.out.println("User tidak ditemukan");
+        boolean userDihapus = false;
+
+        // Mencari user di daftar
+        for (int i = 0; i < daftarUser.size(); i++) {
+            User user = daftarUser.get(i);
+            if (user.getNama().equalsIgnoreCase(nama) && user.getEmail().equalsIgnoreCase(email)) {
+                daftarUser.remove(i); // Menghapus user dari daftar
+                userDihapus = true;
+                System.out.println("User dengan nama " + nama + " dan email " + email + " telah dihapus.");
+                break;
             }
         }
-    }    
+
+        // Jika tidak ditemukan user
+        if (!userDihapus) {
+            System.out.println("User dengan nama " + nama + " dan email " + email + " tidak ditemukan.");
+        }
+    }
+
+    // Fungsi untuk menampilkan semua pengguna (untuk memverifikasi penghapusan)
+    public void tampilkanDaftarUser() {
+        if (daftarUser.isEmpty()) {
+            System.out.println("Tidak ada pengguna dalam daftar.");
+        } else {
+            System.out.println("Daftar Pengguna:");
+            for (User user : daftarUser) {
+                System.out.println(user);
+            }
+        }
+    }
 }

@@ -21,12 +21,20 @@ public class MenuUtil {
         System.out.println("3. Tambah Pelatihan");
         System.out.println("4. Hapus Pelatihan");
         System.out.println("5. Hapus User");
+        System.out.println("6. User yang terdaftar");
         System.out.print("Pilih menu: ");
         int pilihan = ScannerUtil.scanInt(scan);
-
+        
+        while (pilihan < 1 || pilihan > 6) {
+        System.out.println("Pilihan tidak valid. Silakan pilih antara 1-5.");
+        System.out.print("Pilih menu: ");
+        pilihan = ScannerUtil.scanInt(scan);
+    }
+        
         switch (pilihan) {
             case 1:
                 admin.addNews();
+                break;
             case 2:
                 System.out.println("Masukkan ID Berita yang ingin dihapus: ");
                 String idBeritaHapus = ScannerUtil.scanString(scan);
@@ -47,9 +55,23 @@ public class MenuUtil {
                 String emailUserHapus = ScannerUtil.scanString(scan);
                 admin.hapusUser(namaUserHapus, emailUserHapus);
                 break;
+            case 6:
+                admin.tampilkanDaftarUser();
             default:
                 System.out.println("Pilihan tidak valid.");
                 break;
+        }
+        System.out.println("\nApakah Anda ingin melanjutkan?");
+        System.out.println("1. Kembali ke Menu Admin");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+
+        int lanjut = ScannerUtil.scanInt(scan);
+        if (lanjut == 1) {
+            menuAdmin(scan, admin); // Memanggil kembali menu Admin
+        } else {
+            System.out.println("Terima kasih!");
+            menuUtama();
         }
     }
 
@@ -83,6 +105,18 @@ public class MenuUtil {
             default:
                 System.out.println("Pilihan tidak valid.");
                 break;
+        }
+        System.out.println("\nApakah Anda ingin melanjutkan?");
+        System.out.println("1. Kembali ke Menu Pelamar");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+
+        int lanjut = ScannerUtil.scanInt(scan);
+        if (lanjut == 1) {
+            menuPelamar(scan, pelamar); // Memanggil kembali menu Admin
+        } else {
+            System.out.println("Terima kasih!");
+            menuUtama();
         }
     }
 
@@ -131,6 +165,98 @@ public class MenuUtil {
             default:
                 System.out.println("Pilihan tidak valid.");
                 break;
+        }
+        System.out.println("\nApakah Anda ingin melanjutkan?");
+        System.out.println("1. Kembali ke Menu Penyedia");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+
+        int lanjut = ScannerUtil.scanInt(scan);
+        if (lanjut == 1) {
+            menuPenyedia(scan, penyedia); // Memanggil kembali menu Admin
+        } else {
+            System.out.println("Terima kasih!");
+            menuUtama();
+        }
+    }
+    
+    public static void menuUtama(){
+            Scanner scan = new Scanner(System.in);
+            boolean isRunning = true;
+            boolean isLoggedIn = false;
+            User currentUser = null;
+
+            OUTER:
+            while (isRunning) {
+                if (!isLoggedIn){
+                System.out.println("---- Menu Utama ----");
+                System.out.println("1. Login");
+                System.out.println("2. Register");
+                System.out.println("3. Keluar");
+                System.out.print("Pilih menu: ");
+                int pilihanMenu = ScannerUtil.scanInt(scan);
+                switch (pilihanMenu) {
+                    case 1:
+                        {
+                            System.out.print("Masukkan email: ");
+                            String email = ScannerUtil.scanString(scan);
+                            System.out.print("Masukkan password: ");
+                            String password = ScannerUtil.scanString(scan);
+                            boolean berhasilLogin = false;
+                            for (User user : User.getDatabase()) {
+                                if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                                    berhasilLogin = true;
+                                    isLoggedIn = true;
+                                    currentUser = user;
+                                    System.out.println("Login berhasil, selamat datang " + user.getNama());
+                                    if (user instanceof Admin) {
+                                        MenuUtil.menuAdmin(scan, (Admin) user);
+                                    } else if (user instanceof Pelamar) {
+                                        MenuUtil.menuPelamar(scan, (Pelamar) user);
+                                    } else if (user instanceof PembukaLowongan) {
+                                        MenuUtil.menuPenyedia(scan, (PembukaLowongan) user);
+                                    }
+                                }
+                            }       if (!berhasilLogin) {
+                                System.out.println("Login gagal, email atau password salah.");
+                            }       break;
+                        }
+                    case 2:
+                        {
+                            // Proses registrasi
+                            System.out.println("1. Register sebagai Pelamar");
+                            System.out.println("2. Register sebagai Pembuka Lowongan");
+                            System.out.print("Pilih role yang ingin didaftarkan: ");
+                            int pilihanRegister = ScannerUtil.scanInt(scan);
+                            System.out.print("Masukkan nama: ");
+                            String nama = ScannerUtil.scanString(scan);
+                            System.out.print("Masukkan email: ");
+                            String email = ScannerUtil.scanString(scan);
+                            System.out.print("Masukkan password: ");
+                            String password = ScannerUtil.scanString(scan);
+                            System.out.print("Masukkan alamat: ");
+                            String alamat = ScannerUtil.scanString(scan);
+                            System.out.print("Masukkan nomor telepon: ");
+                            String noTelepon = ScannerUtil.scanString(scan);
+                            if (pilihanRegister == 1) {
+                                Pelamar newPelamar = new Pelamar(email, password, nama, alamat, "Pelamar", noTelepon);
+                                newPelamar.register(nama, email, password, alamat, noTelepon);
+                                menuUtama();
+                            } else if (pilihanRegister == 2) {
+                                PembukaLowongan newPenyedia = new PembukaLowongan(email, password, nama, alamat, "Penyedia", noTelepon);
+                                newPenyedia.register(nama, email, password, alamat, noTelepon);
+                                menuUtama();
+                            } else {
+                                System.out.println("Pilihan tidak valid, coba lagi.");
+                            }
+                        }
+                    case 3:
+                        System.out.println("Terima kasih! Keluar dari program.");
+                        break OUTER;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
