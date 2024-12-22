@@ -15,173 +15,7 @@ import static tp6103022330089.tubesdpbo.User.database;
 public class MenuUtil {
     private static HashMap<Lowongan, ArrayList<Pelamar>> daftarPelamarLowongan = new HashMap<>();
     
-    public static void menuAdmin(Scanner scan, Admin admin) {
-        System.out.println("---- Menu Admin ----");
-        System.out.println("1. Tambah Berita");
-        System.out.println("2. Hapus Berita");
-        System.out.println("3. Tambah Pelatihan");
-        System.out.println("4. Hapus Pelatihan");
-        System.out.println("5. Hapus User");
-        System.out.println("6. User yang terdaftar");
-        System.out.print("Pilih menu: ");
-        int pilihan = ScannerUtil.scanInt(scan);
-        
-        while (pilihan < 1 || pilihan > 6) {
-        System.out.println("Pilihan tidak valid. Silakan pilih antara 1-5.");
-        System.out.print("Pilih menu: ");
-        pilihan = ScannerUtil.scanInt(scan);
-    }
-        
-        switch (pilihan) {
-            case 1:
-                admin.addNews();
-                break;
-            case 2:
-                System.out.println("Masukkan ID Berita yang ingin dihapus: ");
-                String idBeritaHapus = ScannerUtil.scanString(scan);
-                admin.deleteNews(idBeritaHapus);
-                break;
-            case 3:
-                admin.tambahPelatihan();
-                break;
-            case 4:
-                System.out.println("Masukkan Judul Pelatihan yang ingin dihapus: ");
-                String judulPelatihanHapus = ScannerUtil.scanString(scan);
-                admin.hapusPelatihan(judulPelatihanHapus);
-                break;
-            case 5:
-                System.out.println("Masukkan nama user yang ingin dihapus: ");
-                String namaUserHapus = ScannerUtil.scanString(scan);
-                System.out.println("Masukkan email user yang ingin dihapus: ");
-                String emailUserHapus = ScannerUtil.scanString(scan);
-                admin.hapusUser(namaUserHapus, emailUserHapus);
-                break;
-            case 6:
-                admin.tampilkanDaftarUser();
-            default:
-                System.out.println("Pilihan tidak valid.");
-                break;
-        }
-        System.out.println("\nApakah Anda ingin melanjutkan?");
-        System.out.println("1. Kembali ke Menu Admin");
-        System.out.println("2. Keluar");
-        System.out.print("Pilih menu: ");
-
-        int lanjut = ScannerUtil.scanInt(scan);
-        if (lanjut == 1) {
-            menuAdmin(scan, admin); // Memanggil kembali menu Admin
-        } else {
-            System.out.println("Terima kasih!");
-            menuUtama();
-        }
-    }
-
-    // Menu Pelamar
-    public static void menuPelamar(Scanner scan, Pelamar pelamar) {
-        System.out.println("---- Menu Pelamar ----");
-        System.out.println("1. Melihat Lowongan");
-        System.out.println("2. Melamar Lowongan");
-        System.out.println("3. Melihat Daftar Pelatihan");
-        System.out.print("Pilih menu: ");
-        int pilihan = ScannerUtil.scanInt(scan);
-
-        switch (pilihan) {
-            case 1:
-            System.out.println("Daftar Lowongan: ");
-                Lowongan.getDaftarLowongan();
-                break;
-            case 2:
-                System.out.println("Masukkan email pelamar: ");
-                String emailPelamar = ScannerUtil.scanString(scan);
-                System.out.println("Masukkan ID Lowongan: ");
-                String idLowongan = ScannerUtil.scanString(scan);
-                pelamar.melamarLowongan(emailPelamar, idLowongan);
-                break;
-            case 3:
-                Pelatihan.getDaftarPelatihan();
-                System.out.println("Masukkan ID Lowongan: ");
-                String idPelatihan = ScannerUtil.scanString(scan);
-                pelamar.mendaftarPelatihan(idPelatihan);
-                break;
-            default:
-                System.out.println("Pilihan tidak valid.");
-                break;
-        }
-        System.out.println("\nApakah Anda ingin melanjutkan?");
-        System.out.println("1. Kembali ke Menu Pelamar");
-        System.out.println("2. Keluar");
-        System.out.print("Pilih menu: ");
-
-        int lanjut = ScannerUtil.scanInt(scan);
-        if (lanjut == 1) {
-            menuPelamar(scan, pelamar); // Memanggil kembali menu Admin
-        } else {
-            System.out.println("Terima kasih!");
-            menuUtama();
-        }
-    }
-
-    // Menu Penyedia Lowongan
-    public static void menuPenyedia(Scanner scan, PembukaLowongan penyedia) {
-        System.out.println("---- Menu Penyedia Lowongan ----");
-        System.out.println("1. Membuat Lowongan");
-        System.out.println("2. Menolak Pelamar");
-        System.out.println("3. Melihat Daftar Pelamar");
-        System.out.println("4. Melihat Daftar Lowongan");
-        System.out.print("Pilih menu: ");
-        int pilihan = ScannerUtil.scanInt(scan);
-
-        switch (pilihan) {
-            case 1:
-                // Membuat lowongan
-                    System.out.print("Masukkan ID Lowongan: ");
-                    String idLowongan = ScannerUtil.scanString(scan);
-                    System.out.print("Masukkan Judul Lowongan: ");
-                    String judul = ScannerUtil.scanString(scan);
-                    System.out.print("Masukkan Deskripsi Lowongan: ");
-                    String deskripsi = ScannerUtil.scanString(scan);
-                    penyedia.membuatLowongan(idLowongan, judul, deskripsi);
-                    Lowongan lowonganBaru = new Lowongan(idLowongan, judul, deskripsi);
-                    daftarPelamarLowongan.put(lowonganBaru, new ArrayList<>());
-                    break;
-            case 2:
-                System.out.print("Masukkan nama pelamar yang akan ditolak: ");
-                String namaPelamar = ScannerUtil.scanString(scan);
-                Pelamar pelamarDitolak = null;
-                for (ArrayList<Pelamar> daftarPelamar : daftarPelamarLowongan.values()) {
-                    for (Pelamar pelamar : daftarPelamar) {
-                        if (pelamar.getNama().equalsIgnoreCase(namaPelamar)) {
-                            pelamarDitolak = pelamar;
-                        }
-                    }
-                }
-                penyedia.menolakPelamar(pelamarDitolak);
-                break;
-            case 3:
-                penyedia.melihatDaftarPelamar(daftarPelamarLowongan);
-                break;
-            case 4:
-                penyedia.showLowongan();
-                break;
-            default:
-                System.out.println("Pilihan tidak valid.");
-                break;
-        }
-        System.out.println("\nApakah Anda ingin melanjutkan?");
-        System.out.println("1. Kembali ke Menu Penyedia");
-        System.out.println("2. Keluar");
-        System.out.print("Pilih menu: ");
-
-        int lanjut = ScannerUtil.scanInt(scan);
-        if (lanjut == 1) {
-            menuPenyedia(scan, penyedia); // Memanggil kembali menu Admin
-        } else {
-            System.out.println("Terima kasih!");
-            menuUtama();
-        }
-    }
-    
-    public static void menuUtama(){
+        public static void menuUtama(){
             Scanner scan = new Scanner(System.in);
             boolean isRunning = true;
             boolean isLoggedIn = false;
@@ -260,6 +94,169 @@ public class MenuUtil {
                         break;
                 }
             }
+        }
+    }
+    
+    public static void menuAdmin(Scanner scan, Admin admin) {
+        System.out.println("---- Menu Admin ----");
+        System.out.println("1. Tambah Berita");
+        System.out.println("2. Hapus Berita");
+        System.out.println("3. Tambah Pelatihan");
+        System.out.println("4. Hapus Pelatihan");
+        System.out.println("5. Hapus User");
+        System.out.println("6. User yang terdaftar");
+        System.out.print("Pilih menu: ");
+        int pilihan = ScannerUtil.scanInt(scan);
+        
+        while (pilihan < 1 || pilihan > 7) {
+        System.out.println("Pilihan tidak valid. Silakan pilih antara 1-5.");
+        System.out.print("Pilih menu: ");
+    }
+        
+        switch (pilihan) {
+            case 1:
+                admin.addNews();
+                break;
+            case 2:
+                System.out.println("Masukkan ID Berita yang ingin dihapus: ");
+                String idBeritaHapus = ScannerUtil.scanString(scan);
+                admin.deleteNews(idBeritaHapus);
+                break;
+            case 3:
+                admin.tambahPelatihan();
+                break;
+            case 4:
+                System.out.println("Masukkan Judul Pelatihan yang ingin dihapus: ");
+                String judulPelatihanHapus = ScannerUtil.scanString(scan);
+                admin.hapusPelatihan(judulPelatihanHapus);
+                break;
+            case 5:
+                System.out.println("Masukkan nama user yang ingin dihapus: ");
+                String namaUserHapus = ScannerUtil.scanString(scan);
+                System.out.println("Masukkan email user yang ingin dihapus: ");
+                String emailUserHapus = ScannerUtil.scanString(scan);
+                User.hapusUser(namaUserHapus, emailUserHapus);
+                break;
+            case 6:
+                User.showAllUsers();
+                break;
+            default:
+                break;
+        }
+        System.out.println("\nApakah Anda ingin melanjutkan?");
+        System.out.println("1. Kembali ke Menu Admin");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+
+        int lanjut = ScannerUtil.scanInt(scan);
+        if (lanjut == 1) {
+            menuAdmin(scan, admin); // Memanggil kembali menu Admin
+        } else {
+            System.out.println("Terima kasih!");
+            menuUtama();
+        }
+    }
+
+    // Menu Pelamar
+    public static void menuPelamar(Scanner scan, Pelamar pelamar) {
+        System.out.println("---- Menu Pelamar ----");
+        System.out.println("1. Melihat Lowongan");
+        System.out.println("2. Melamar Lowongan");
+        System.out.println("3. Melihat Daftar Pelatihan");
+        System.out.print("Pilih menu: ");
+        int pilihan = ScannerUtil.scanInt(scan);
+
+        switch (pilihan) {
+            case 1:
+            System.out.println("Daftar Lowongan: ");
+                Lowongan.getDaftarLowongan();
+                break;
+            case 2:
+                System.out.println("Masukkan email pelamar: ");
+                String emailPelamar = ScannerUtil.scanString(scan);
+                System.out.println("Masukkan ID Lowongan: ");
+                String idLowongan = ScannerUtil.scanString(scan);
+                pelamar.melamarLowongan(emailPelamar, idLowongan);
+                break;
+            case 3:
+                Pelatihan.getDaftarPelatihan();
+                System.out.println("Masukkan ID Lowongan: ");
+                String idPelatihan = ScannerUtil.scanString(scan);
+                pelamar.mendaftarPelatihan(idPelatihan);
+                break;
+            default:
+                break;
+        }
+        System.out.println("\nApakah Anda ingin melanjutkan?");
+        System.out.println("1. Kembali ke Menu Pelamar");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+
+        int lanjut = ScannerUtil.scanInt(scan);
+        if (lanjut == 1) {
+            menuPelamar(scan, pelamar); // Memanggil kembali menu Admin
+        } else {
+            System.out.println("Terima kasih!");
+            menuUtama();
+        }
+    }
+
+    // Menu Penyedia Lowongan
+    public static void menuPenyedia(Scanner scan, PembukaLowongan penyedia) {
+        System.out.println("---- Menu Penyedia Lowongan ----");
+        System.out.println("1. Membuat Lowongan");
+        System.out.println("2. Menolak Pelamar");
+        System.out.println("3. Melihat Daftar Pelamar");
+        System.out.println("4. Melihat Daftar Lowongan");
+        System.out.print("Pilih menu: ");
+        int pilihan = ScannerUtil.scanInt(scan);
+
+        switch (pilihan) {
+            case 1:
+                // Membuat lowongan
+                    System.out.print("Masukkan ID Lowongan: ");
+                    String idLowongan = ScannerUtil.scanString(scan);
+                    System.out.print("Masukkan Judul Lowongan: ");
+                    String judul = ScannerUtil.scanString(scan);
+                    System.out.print("Masukkan Deskripsi Lowongan: ");
+                    String deskripsi = ScannerUtil.scanString(scan);
+                    penyedia.membuatLowongan(idLowongan, judul, deskripsi);
+                    Lowongan lowonganBaru = new Lowongan(idLowongan, judul, deskripsi);
+                    daftarPelamarLowongan.put(lowonganBaru, new ArrayList<>());
+                    break;
+            case 2:
+                System.out.print("Masukkan nama pelamar yang akan ditolak: ");
+                String namaPelamar = ScannerUtil.scanString(scan);
+                Pelamar pelamarDitolak = null;
+                for (ArrayList<Pelamar> daftarPelamar : daftarPelamarLowongan.values()) {
+                    for (Pelamar pelamar : daftarPelamar) {
+                        if (pelamar.getNama().equalsIgnoreCase(namaPelamar)) {
+                            pelamarDitolak = pelamar;
+                        }
+                    }
+                }
+                penyedia.menolakPelamar(pelamarDitolak);
+                break;
+            case 3:
+                penyedia.melihatDaftarPelamar(daftarPelamarLowongan);
+                break;
+            case 4:
+                penyedia.showLowongan();
+                break;
+            default:
+                break;
+        }
+        System.out.println("\nApakah Anda ingin melanjutkan?");
+        System.out.println("1. Kembali ke Menu Penyedia");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+
+        int lanjut = ScannerUtil.scanInt(scan);
+        if (lanjut == 1) {
+            menuPenyedia(scan, penyedia); // Memanggil kembali menu Admin
+        } else {
+            System.out.println("Terima kasih!");
+            menuUtama();
         }
     }
 }

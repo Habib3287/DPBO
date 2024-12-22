@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class Admin extends User implements News {
     private ArrayList<Berita> daftarBerita = new ArrayList<>();
     private ArrayList<Pelatihan> daftarPelatihan = new ArrayList<>();
-    private ArrayList<User> daftarUser = new ArrayList<>();
 
     public Admin(String nama, String email, String password, String alamat, String role, String noTelepon) {
         super(nama, email, password, alamat, role, noTelepon);
@@ -101,36 +100,6 @@ public class Admin extends User implements News {
                 " tidak ditemukan.");
     }
 
-    // Admin dapat menghapus pengguna
-    public void hapusUser(String email, String nama) {
-        boolean userDihapus = false;
-
-        // Mencari user di daftar
-        for (int i = 0; i < daftarUser.size(); i++) {
-            User user = daftarUser.get(i);
-            if (user.getNama().equalsIgnoreCase(nama) && user.getEmail().equalsIgnoreCase(email)) {
-                daftarUser.remove(i); // Menghapus user dari daftar
-                userDihapus = true;
-                System.out.println("User dengan nama " + nama + " dan email " + email + " telah dihapus.");
-                break;
-            }
-        }
-
-        // Jika tidak ditemukan user
-        if (!userDihapus) {
-            System.out.println("User dengan nama " + nama + " dan email " + email + " tidak ditemukan.");
-        }
-    }
-
     // Fungsi untuk menampilkan semua pengguna (untuk memverifikasi penghapusan)
-    public void tampilkanDaftarUser() {
-        if (daftarUser.isEmpty()) {
-            System.out.println("Tidak ada pengguna dalam daftar.");
-        } else {
-            System.out.println("Daftar Pengguna:");
-            for (User user : daftarUser) {
-                System.out.println(user);
-            }
-        }
-    }
+   
 }

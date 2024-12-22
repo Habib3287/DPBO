@@ -10,6 +10,7 @@ package tp6103022330089.tubesdpbo;
  */
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class User {
     protected String nama;
@@ -21,6 +22,8 @@ public abstract class User {
 
     // Database untuk menyimpan semua user
     protected static ArrayList<User> database = new ArrayList<>();
+    static Scanner scan = new Scanner(System.in);
+    
 
     // Constructor untuk User
     public User(String nama, String email, String password, String alamat, String role, String noTelepon) {
@@ -109,5 +112,39 @@ public abstract class User {
                 System.out.println("Nama: " + user.getNama() + " Email: " + user.getEmail() + " Role: " + user.getRole());
             }
         }
+    }
+    
+    public static void hapusUser(String nama, String email) {
+        boolean userDihapus = false;
+
+        for (int i = 0; i < database.size(); i++) {
+            User user = database.get(i);
+            if (user.getNama().equalsIgnoreCase(nama) && user.getEmail().equalsIgnoreCase(email)) {
+                System.out.println("Apakah anda yakin ingin menghapus user " + user.getNama() + "? (Y/N)");
+                char confirm = ScannerUtil.scanChar(scan);
+                if (confirm != 'Y') {
+                    System.out.println("User tidak jadi dihapus.");
+                    return;
+                }else{
+                database.remove(i);
+                userDihapus = true;
+                System.out.println("User dengan nama " + nama + " dan email " + email + " telah dihapus.");
+                break;
+                }
+            }
+        }
+
+        if (!userDihapus) {
+            System.out.println("User dengan nama " + nama + " dan email " + email + " tidak ditemukan.");
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return "Nama: " + nama + 
+            ", Email: " + email + 
+            ", Role: " + role + 
+            ", Alamat: " + alamat + 
+            ", No Telepon: " + noTelepon;
     }
 }
