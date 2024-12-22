@@ -18,7 +18,7 @@ public class Pelamar extends User {
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
         Pelamar pelamarBaru = new Pelamar(nama, email, password, alamat, "Pelamar", noTelepon);
-        addUser(pelamarBaru);
+        database.add(pelamarBaru);
     }
 
     // Pelamar dapat melamar pekerjaan

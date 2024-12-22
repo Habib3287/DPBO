@@ -23,7 +23,7 @@ private ArrayList<Lowongan> lowonganYangDibuat;
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
         PembukaLowongan penyediaBaru = new PembukaLowongan(nama, email, password, alamat, "Penyedia", noTelepon);
-        addUser(penyediaBaru);
+        database.add(penyediaBaru);
     }
 
     // Penyedia dapat membuat lowongan pekerjaan

@@ -6,6 +6,7 @@ package tp6103022330089.tubesdpbo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import static tp6103022330089.tubesdpbo.User.database;
 
 /**
  *
@@ -241,10 +242,12 @@ public class MenuUtil {
                             if (pilihanRegister == 1) {
                                 Pelamar newPelamar = new Pelamar(email, password, nama, alamat, "Pelamar", noTelepon);
                                 newPelamar.register(nama, email, password, alamat, noTelepon);
+                                database.add(newPelamar);
                                 menuUtama();
                             } else if (pilihanRegister == 2) {
                                 PembukaLowongan newPenyedia = new PembukaLowongan(email, password, nama, alamat, "Penyedia", noTelepon);
                                 newPenyedia.register(nama, email, password, alamat, noTelepon);
+                                database.add(newPenyedia);
                                 menuUtama();
                             } else {
                                 System.out.println("Pilihan tidak valid, coba lagi.");

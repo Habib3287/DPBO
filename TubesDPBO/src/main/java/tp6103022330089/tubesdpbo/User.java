@@ -99,11 +99,6 @@ public abstract class User {
     // Abstract method untuk register, setiap subclass perlu mengimplementasikan
     public abstract void register(String nama, String email, String password, String alamat, String noTelepon);
 
-    // Method untuk menambahkan user ke database
-    public static void addUser(User user) {
-        database.add(user);
-    }
-
 
     // Method untuk menampilkan daftar semua pengguna
     public static void showAllUsers() {

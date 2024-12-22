@@ -4,6 +4,8 @@
  */
 package tp6103022330089.tubesdpbo;
 
+import static tp6103022330089.tubesdpbo.User.database;
+
 /**
  *
  * @author LEGION
@@ -18,9 +20,9 @@ public class Testing {
         PembukaLowongan penyedia = new PembukaLowongan("C", "CD", "3", "Alamat Penyedia", "Penyedia", "08111223344");
         
         // Menambahkan pengguna ke database
-        User.addUser(admin);
-        User.addUser(penyedia);
-        User.addUser(pelamar);
+        database.add(admin);
+        database.add(penyedia);
+        database.add(pelamar);
         
         MenuUtil.menuUtama();
     }
