@@ -22,6 +22,10 @@ private ArrayList<Lowongan> lowonganYangDibuat;
 
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
+        while (!ScannerUtil.isValidEmail(email)) {
+            System.out.println("Email tidak valid. Silakan masukkan email yang benar:");
+            email = scan.nextLine();
+        }
         PembukaLowongan penyediaBaru = new PembukaLowongan(nama, email, password, alamat, "Penyedia", noTelepon);
         User.database.add(penyediaBaru);
     }
