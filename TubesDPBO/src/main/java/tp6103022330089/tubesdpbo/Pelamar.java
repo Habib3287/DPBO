@@ -17,10 +17,6 @@ public class Pelamar extends User {
 
     @Override
     public void register(String nama, String email, String password, String alamat, String noTelepon) {
-         while (!ScannerUtil.isValidEmail(email)) {
-        System.out.println("Email tidak valid. Silakan masukkan email yang benar:");
-        email = scan.nextLine();
-    }
         Pelamar pelamarBaru = new Pelamar(nama, email, password, alamat, "Pelamar", noTelepon);
         User.database.add(pelamarBaru);
     }

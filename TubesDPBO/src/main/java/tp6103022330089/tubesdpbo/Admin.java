@@ -87,19 +87,20 @@ public class Admin extends User implements News {
     }
 
     // Admin dapat menghapus pelatihan
-    public void hapusPelatihan(String judul) {
+    public void hapusPelatihan(String judulPelatihanHapus) {
         for (Pelatihan pelatihan : daftarPelatihan) {
-            if (pelatihan.getJudul().equals(judul)) {
+            if (pelatihan.getJudul().equals(judulPelatihanHapus)) {
                 daftarPelatihan.remove(pelatihan);
-                System.out.println("Pelatihan " + judul +
+                System.out.println("Pelatihan " + judulPelatihanHapus +
                         " berhasil dihapus.");
                 return;
             }
         }
-        System.out.println("Pelatihan " + judul +
+        System.out.println("Pelatihan " + judulPelatihanHapus +
                 " tidak ditemukan.");
+                
     }
 
-    // Fungsi untuk menampilkan semua pengguna (untuk memverifikasi penghapusan)
+
    
 }
