@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     
-    <!-- Tambahkan informasi SCM untuk integrasi dengan GitHub -->
+    <!-- SCM Configuration for GitHub -->
     <scm>
         <connection>scm:git:https://github.com/habib3287/TubesDPBO.git</connection>
         <developerConnection>scm:git:https://github.com/habib3287/TubesDPBO.git</developerConnection>
@@ -16,45 +16,57 @@
     </scm>
     
     <properties>
+        <!-- Build Properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release> <!-- Sesuaikan versi Java -->
-        <exec.mainClass>tp6103022330089.tubesdpbo.TubesDPBO</exec.mainClass>
-        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        <maven.compiler.release>11</maven.compiler.release>
         
-        <!-- Konfigurasi SonarCloud -->
-        <sonar.organization>habib3287</sonar.organization>
+        <!-- Main Class Configuration -->
+        <exec.mainClass>tp6103022330089.tubesdpbo.Testing</exec.mainClass>
+        
+        <!-- SonarQube/SonarCloud Configuration -->
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        <sonar.organization>Haafzd</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>habib3287_TubesDPBO</sonar.projectKey>
-        <sonar.projectName>TubesDPBO</sonar.projectName>
+        <sonar.projectKey>Haafzd_DPBO</sonar.projectKey>
+        <sonar.projectName>DPBO</sonar.projectName>
         <sonar.moduleKey>TP6103022330089:TubesDPBO</sonar.moduleKey>
         <sonar.language>java</sonar.language>
         <sonar.java.binaries>target/classes</sonar.java.binaries>
         <sonar.java.source>11</sonar.java.source>
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+        
+        <!-- Testing and Coverage -->
+        <surefire.version>2.22.2</surefire.version>
+        <jacoco.version>0.8.7</jacoco.version>
+        
+        <!-- Exclusions -->
+        <sonar.exclusions>**/test/**, **/generated/**</sonar.exclusions>
+        <sonar.coverage.exclusions>**/*Test.java</sonar.coverage.exclusions>
     </properties>
 
     <build>
         <plugins>
-            <!-- Plugin SonarQube -->
+            <!-- SonarQube Scanner -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.1.2184</version>
+                <version>${sonar-maven-plugin.version}</version>
             </plugin>
             
-            <!-- Plugin Compiler -->
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>11</release>
-                    <source>11</source>
-                    <target>11</target>
+                    <release>${maven.compiler.release}</release>
+                    <source>${maven.compiler.release}</source>
+                    <target>${maven.compiler.release}</target>
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
             
-            <!-- Plugin untuk executable JAR -->
+            <!-- Executable JAR Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -67,6 +79,50 @@
                     </archive>
                 </configuration>
             </plugin>
+            
+            <!-- Unit Testing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
+            </plugin>
+            
+            <!-- Code Coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <!-- Dependency Management -->
+    <dependencies>
+        <!-- Add your project dependencies here -->
+        <!-- Example:
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        -->
+    </dependencies>
 </project>
