@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>TP6103022330089</groupId>
+    <artifactId>TubesDPBO</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    
+    <!-- Tambahkan informasi SCM untuk integrasi dengan GitHub -->
+    <scm>
+        <connection>scm:git:https://github.com/habib3287/TubesDPBO.git</connection>
+        <developerConnection>scm:git:https://github.com/habib3287/TubesDPBO.git</developerConnection>
+        <url>https://github.com/habib3287/TubesDPBO</url>
+    </scm>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>11</maven.compiler.release> <!-- Sesuaikan versi Java -->
+        <exec.mainClass>tp6103022330089.tubesdpbo.TubesDPBO</exec.mainClass>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        
+        <!-- Konfigurasi SonarCloud -->
+        <sonar.organization>habib3287</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>habib3287_TubesDPBO</sonar.projectKey>
+        <sonar.projectName>TubesDPBO</sonar.projectName>
+        <sonar.moduleKey>TP6103022330089:TubesDPBO</sonar.moduleKey>
+        <sonar.language>java</sonar.language>
+        <sonar.java.binaries>target/classes</sonar.java.binaries>
+        <sonar.java.source>11</sonar.java.source>
+        <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- Plugin SonarQube -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
+            </plugin>
+            
+            <!-- Plugin Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>11</release>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+            
+            <!-- Plugin untuk executable JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>tp6103022330089.tubesdpbo.Testing</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
